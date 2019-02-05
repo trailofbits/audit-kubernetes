@@ -1306,3 +1306,13 @@
 # use OS defaults, typically 75 seconds on Linux, see
 # /proc/sys/net/ipv4/tcp_keepalive_intvl.
 #tcp_keepalive_intvl: -1
+
+file_roots:
+ base:
+   - /vagrant/salt/srv/base/states
+   - /vagrant/salt/srv/base/orch
+   - /vagrant/salt/srv/base/assets
+
+pillar_roots:
+  base:
+    - /vagrant/salt/srv/base/pillars
