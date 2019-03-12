@@ -1,0 +1,42 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: netchecker-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: netchecker-server
+      labels:
+        app: netchecker-server
+      namespace: {{ netcheck_namespace }}
+    spec:
+{% if kube_version is version('v1.11.1', '>=') %}
+      priorityClassName: {% if netcheck_namespace == 'kube-system' %}system-cluster-critical{% else %}k8s-cluster-critical{% endif %}{{''}}
+{% endif %}
+      containers:
+        - name: netchecker-server
+          image: "{{ netcheck_server_image_repo }}:{{ netcheck_server_image_tag }}"
+          env:
+          imagePullPolicy: {{ k8s_image_pull_policy }}
+          resources:
+            limits:
+              cpu: {{ netchecker_server_cpu_limit }}
+              memory: {{ netchecker_server_memory_limit }}
+            requests:
+              cpu: {{ netchecker_server_cpu_requests }}
+              memory: {{ netchecker_server_memory_requests }}
+          securityContext:
+            runAsUser: {{ netchecker_server_user | default('0') }}
+            runAsGroup: {{ netchecker_server_group | default('0') }}
+          ports:
+            - containerPort: 8081
+          args:
+            - "-v=5"
+            - "-logtostderr"
+            - "-kubeproxyinit"
+            - "-endpoint=0.0.0.0:8081"
+      tolerations:
+        - effect: NoSchedule
+          operator: Exists
+      serviceAccountName: netchecker-server

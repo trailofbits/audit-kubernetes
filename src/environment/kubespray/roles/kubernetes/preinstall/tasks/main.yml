@@ -1,0 +1,95 @@
+---
+# Disable swap
+- import_tasks: 0010-swapoff.yml
+  when:
+    - not dns_late
+    - disable_swap
+
+- import_tasks: 0020-verify-settings.yml
+  when:
+    - not dns_late
+  tags:
+    - asserts
+
+# This is run before bin_dir is pinned because these tasks are run on localhost
+- import_tasks: 0030-pre_upgrade.yml
+  run_once: true
+  when:
+    - not dns_late
+  tags:
+    - upgrade
+
+- import_tasks: 0040-set_facts.yml
+  tags:
+    - resolvconf
+    - facts
+
+- import_tasks: 0050-create_directories.yml
+  when:
+    - not dns_late
+
+- import_tasks: 0060-resolvconf.yml
+  when:
+    - dns_mode != 'none'
+    - resolvconf_mode == 'host_resolvconf'
+  tags:
+    - bootstrap-os
+    - resolvconf
+
+- import_tasks: 0070-system-packages.yml
+  when:
+    - not dns_late
+  tags:
+    - bootstrap-os
+
+- import_tasks: 0080-system-configurations.yml
+  when:
+    - not dns_late
+  tags:
+    - bootstrap-os
+
+- import_tasks: 0090-etchosts.yml
+  when:
+    - not dns_late
+  tags:
+    - bootstrap-os
+    - etchosts
+
+- import_tasks: 0100-dhclient-hooks.yml
+  when:
+    - dns_mode != 'none'
+    - resolvconf_mode == 'host_resolvconf'
+    - not ansible_os_family in ["CoreOS", "Container Linux by CoreOS"]
+  tags:
+    - bootstrap-os
+    - resolvconf
+
+- import_tasks: 0110-dhclient-hooks-undo.yml
+  when:
+    - dns_mode != 'none'
+    - resolvconf_mode != 'host_resolvconf'
+    - not ansible_os_family in ["CoreOS", "Container Linux by CoreOS"]
+  tags:
+    - bootstrap-os
+    - resolvconf
+
+# We need to make sure the network is restarted early enough so that docker can later pick up the correct system
+# nameservers and search domains
+- meta: flush_handlers
+
+- name: Check if we are running inside a Azure VM
+  stat:
+    path: /var/lib/waagent/
+  register: azure_check
+  when:
+    - not dns_late
+  tags:
+    - bootstrap-os
+
+- import_tasks: 0120-growpart-azure-centos-7.yml
+  when:
+    - not dns_late
+    - azure_check.stat.exists
+    - ansible_distribution in ["CentOS","RedHat"]
+  tags:
+    - bootstrap-os
