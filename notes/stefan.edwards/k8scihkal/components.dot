@@ -1,0 +1,4 @@
+digraph Components {
+    master[shape=record, label="{ <m> master | <api> API server | <sch> Scheduler | <etcd> etcd (in a pod) | <ipod> Internal Pods}", rankdir=LR]
+    nodes[shape=record, rankdir=LR, label="{ <n> Nodes | <cni> CNI Networking layer | <kl> kubelet | <kp> kube-proxy | <cr> Container Runtime | <pods> N-ary pods}"]
+}

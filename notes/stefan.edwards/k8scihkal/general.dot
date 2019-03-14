@@ -1,0 +1,19 @@
+digraph General {
+    internet[label="Internet", shape="septagon"]
+    master[label="k8s Master", shape="Mdiamond"]
+    node0[label="k8s Node0", shape="diamond"]
+    node1[label="k8s NodeN", shape="diamond"]
+    pod00[label="k8s Node0 Pod0"] 
+    pod01[label="k8s Node0 Pod1"]
+    pod10[label="k8s NodeN Pod0"]
+    pod11[label="k8s NodeN Pod1"]
+    internet->master
+    master->node0
+    master->node1
+    node0->pod00
+    node0->pod01
+    node1->pod10
+    node1->pod11
+    internet->node0
+    internet->node1
+}
