@@ -1,0 +1,16 @@
+# See the OWNERS docs at https://go.k8s.io/owners
+
+reviewers:
+  - dlorenc
+  - balopat
+  - tstromberg
+  - priyawadhwa
+  - afbjorklund
+approvers:
+  - dlorenc
+  - luxas
+  - jimmidyson
+  - balopat
+  - tstromberg
+  - priyawadhwa
+  - afbjorklund

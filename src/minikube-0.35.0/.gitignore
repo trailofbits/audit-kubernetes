@@ -1,0 +1,41 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+
+# Folders
+_obj
+_test
+
+#Don't ignore arch linux .SRCINFO
+!.SRCINFO
+
+# Architecture specific extensions/prefixes
+[568vq].out
+
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+
+_testmain.go
+
+*.exe
+*.test
+*.prof
+
+/out
+/_gopath
+
+#iso version file
+deploy/iso/minikube-iso/board/coreos/minikube/rootfs-overlay/etc/VERSION
+
+/pkg/minikube/assets/assets.go
+/minikube
+
+.DS_Store
+
+/.idea
+
+/.vscode

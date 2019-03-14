@@ -1,0 +1,8 @@
+[Match]
+Name=eth*
+
+[Network]
+DHCP=ipv4
+
+[DHCP]
+ClientIdentifier=mac
