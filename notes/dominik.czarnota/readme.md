@@ -82,9 +82,9 @@ Let's try all the ports:
 * 22 - `nc` returns `SSH-2.0-OpenSSH_7.7`
 * 111 - rpcbind
 * 2049 - ???
-* 2376 - `curl` https - sslv3 alert bad certificate
-* 2379 - `curl` https - sslv3 alert bad certificate
-* 2380 - `curl` https - sslv3 alert bad certificate
+* 2376 - docker daemon HTTPS 
+* 2379 - etcd HTTPS - listen/advertise sclient-urls
+* 2380 - etcd HTTPS - listen/advertise peer-urls
 * 5355 - connection refused
 * 8443 - https, 403 forbidden
 * 10250 - kubelet HTTPS: `/runningpods/` returns forbidden
@@ -185,6 +185,13 @@ $ cat /proc/net/tcp | awk '{split($2,a,":"); print sprintf("%d","0x"a[2])" "$10}
 [ALMOST, not working fully] For a given `$port` find the associated socket, note that doing `grep -B20` instead of `grep` might show the PID that uses this socket:
 ```bash
 $ sudo ls -la /proc/*/fd | grep "$(cat /proc/net/tcp | awk '{split($2,a,":"); print sprintf("%d","0x"a[2])" "$10}' | grep $port | awk '{print $2}')"
+```
+
+Port 2376 is a https for docker daemon:
+```bash
+$ ps auxf | grep dockerd
+docker   27563  0.0  0.0   9240   480 pts/0    S+   16:10   0:00              \_ grep dockerd
+root      3637  1.2  3.3 644280 68736 ?        Ssl  08:12   5:44 /usr/bin/dockerd -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock --tlsverify --tlscacert /etc/docker/ca.pem --tlscert /etc/docker/server.pem --tlskey /etc/docker/server-key.pem --label provider=vmware --insecure-registry 10.96.0.0/12
 ```
 
 Port 39095:
