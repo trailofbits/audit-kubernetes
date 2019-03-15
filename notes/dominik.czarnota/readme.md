@@ -80,7 +80,7 @@ Nmap done: 1 IP address (1 host up) scanned in 19.38 seconds
 
 Let's try all the ports:
 * 22 - `nc` returns `SSH-2.0-OpenSSH_7.7`
-* 111 - ???
+* 111 - rpcbind
 * 2049 - ???
 * 2376 - `curl` https - sslv3 alert bad certificate
 * 2379 - `curl` https - sslv3 alert bad certificate
@@ -93,12 +93,12 @@ Let's try all the ports:
 * 10257 - controller manager: Internal Server Error on https
 * 10259 - kube-scheduler https: 403 forbidden
 * 38195 - ???
-* 39095 - ???
-* 52589 - ???
-* 52737 - ???
+* 39095 - rpc.mountd ?
+* 52589 - rpc.mountd ?
+* 52737 - rpc.mountd ?
 
 Some logs from testing above:
-```
+```bash
 ➜ curl https://192.168.143.141:8443/ -k
 {
   "kind": "Status",
@@ -136,6 +136,117 @@ Internal Server Error: "/": subjectaccessreviews.authorization.k8s.io is forbidd
   },
   "code": 403
 }%
+```
+
+The `minikube ssh` command let us ssh into the VM and inspect other ports. It uses `busybox` so e.g. `lsof -i :PORT` doesn't work.
+
+The ports can be inspected via `cat /proc/net/tcp` (as suggested on https://serverfault.com/questions/219984/busybox-netstat-no-p).
+
+For example, we can find out that port 111 (006F in hex) is bound by `rpcbind` command:
+```bash
+$ cat /proc/net/tcp | grep 006F
+   9: 00000000:006F 00000000:0000 0A 00000000:00000000 00:00000000 00000000     0        0 16290 1 00000000cb421112 100 0 0 10 0
+
+$ sudo ls  -la /proc/*/fd | grep -B15 16290
+/proc/3192/fd:
+total 0
+dr-x------ 2 root root  0 Mar 15 15:28 .
+dr-xr-xr-x 9 root root  0 Mar 15 01:46 ..
+lrwx------ 1 root root 64 Mar 15 15:34 0 -> /dev/null
+lrwx------ 1 root root 64 Mar 15 15:34 1 -> /dev/null
+lrwx------ 1 root root 64 Mar 15 15:34 10 -> socket:[16292]
+lrwx------ 1 root root 64 Mar 15 15:34 11 -> socket:[16293]
+lrwx------ 1 root root 64 Mar 15 15:34 12 -> socket:[17431]
+lrwx------ 1 root root 64 Mar 15 15:34 2 -> /dev/null
+lrwx------ 1 root root 64 Mar 15 15:34 3 -> socket:[16980]
+lr-x------ 1 root root 64 Mar 15 15:34 4 -> /run/rpcbind.lock
+lrwx------ 1 root root 64 Mar 15 15:34 5 -> socket:[17196]
+lrwx------ 1 root root 64 Mar 15 15:34 6 -> socket:[16288]
+lrwx------ 1 root root 64 Mar 15 15:34 7 -> socket:[16289]
+lrwx------ 1 root root 64 Mar 15 15:34 8 -> socket:[16290]
+
+$ cat /proc/3192/cmdline
+/usr/bin/rpcbind$
+```
+
+Port 2049 (0x0801) - not found?:
+```
+$ cat /proc/net/tcp | grep 0801
+  14: 00000000:0801 00000000:0000 0A 00000000:00000000 00:00000000 00000000     0        0 16319 1 000000000f736b62 100 0 0 10 0
+$ sudo ls  -la /proc/*/fd | grep -B15 16319
+$
+```
+
+Some useful commands - show port <-> socket inode (not sure if this is good name) mapping:
+```bash
+$ cat /proc/net/tcp | awk '{split($2,a,":"); print sprintf("%d","0x"a[2])" "$10}' |  sort
+```
+
+[ALMOST, not working fully] For a given `$port` find the associated socket, note that doing `grep -B20` instead of `grep` might show the PID that uses this socket:
+```bash
+$ sudo ls -la /proc/*/fd | grep "$(cat /proc/net/tcp | awk '{split($2,a,":"); print sprintf("%d","0x"a[2])" "$10}' | grep $port | awk '{print $2}')"
+```
+
+Port 39095:
+```bash
+$ export port=39095
+$ echo $port
+39095
+$ echo "$(cat /proc/net/tcp | awk '{split($2,a,":"); print sprintf("%d","0x"a[2])" "$10}' | grep $port | awk '{print $2}')"
+15824
+
+$ sudo ls -la /proc/*/fd | grep 15824
+lrwx------ 1 root root 64 Mar 15 15:34 12 -> socket:[15824]
+
+$ sudo ls -la /proc/*/fd | grep 15824 -B15
+lrwx------ 1 systemd-resolve systemd-resolve 64 Mar 15 01:46 4 -> anon_inode:[eventpoll]
+lrwx------ 1 systemd-resolve systemd-resolve 64 Mar 15 01:46 5 -> anon_inode:[signalfd]
+lrwx------ 1 systemd-resolve systemd-resolve 64 Mar 15 01:46 6 -> anon_inode:[timerfd]
+lr-x------ 1 systemd-resolve systemd-resolve 64 Mar 15 01:46 7 -> /proc/sys/kernel/hostname
+lr-x------ 1 systemd-resolve systemd-resolve 64 Mar 15 01:46 8 -> anon_inode:inotify
+lrwx------ 1 systemd-resolve systemd-resolve 64 Mar 15 01:46 9 -> socket:[15742]
+
+/proc/3159/fd:
+total 0
+dr-x------ 2 root root  0 Mar 15 15:28 .
+dr-xr-xr-x 9 root root  0 Mar 15 01:46 ..
+lrwx------ 1 root root 64 Mar 15 15:34 0 -> /dev/null
+lrwx------ 1 root root 64 Mar 15 15:34 1 -> /dev/null
+lrwx------ 1 root root 64 Mar 15 15:34 10 -> socket:[15818]
+lrwx------ 1 root root 64 Mar 15 15:34 11 -> socket:[15821]
+lrwx------ 1 root root 64 Mar 15 15:34 12 -> socket:[15824]
+$ sudo ls -la /proc/3159/exe
+lrwxrwxrwx 1 root root 0 Mar 15 01:46 /proc/3159/exe -> /usr/sbin/rpc.mountd
+```
+
+Port 52895:
+```bash
+$ export port=52589
+
+$ echo "$(cat /proc/net/tcp | awk '{split($2,a,":"); print sprintf("%d","0x"a[2])" "$10}' | grep $port | awk '{print $2}')"
+15812
+
+$ sudo ls -la /proc/*/fd | grep 15812 -B30 | grep proc
+lr-x------ 1 systemd-resolve systemd-resolve 64 Mar 15 01:46 7 -> /proc/sys/kernel/hostname
+/proc/3159/fd:
+lrwx------ 1 root root 64 Mar 15 15:34 3 -> /proc/3157/net/rpc/auth.unix.ip/channel
+lrwx------ 1 root root 64 Mar 15 15:34 4 -> /proc/3157/net/rpc/nfsd.export/channel
+lrwx------ 1 root root 64 Mar 15 15:34 5 -> /proc/3157/net/rpc/nfsd.fh/channel
+$ sudo ls -la /proc/3159/exe
+lrwxrwxrwx 1 root root 0 Mar 15 01:46 /proc/3159/exe -> /usr/sbin/rpc.mountd
+```
+
+Port 52737:
+```bash
+$ export port=52737
+$ echo "$(cat /proc/net/tcp | awk '{split($2,a,":"); print sprintf("%d","0x"a[2])" "$10}' | grep $port | awk '{print $2}')"
+15818
+$ sudo ls -la /proc/*/fd | grep -B30 15818 | grep proc
+/proc/3156/fd:
+lr-x------ 1 systemd-resolve systemd-resolve 64 Mar 15 01:46 7 -> /proc/sys/kernel/hostname
+/proc/3159/fd:
+$ sudo ls -la /proc/3159/exe
+lrwxrwxrwx 1 root root 0 Mar 15 01:46 /proc/3159/exe -> /usr/sbin/rpc.mountd
 ```
 
 #### Minikube has addons
