@@ -1,0 +1,43 @@
+➜ ~/projects/audit-kubernetes/notes/stefan.edwards/go_errcheck.sh k8s.io/kubernetes
+running k8s.io/kubernetes/cmd/clicheck
+cmd/clicheck/check_cli_conventions.go:49:14:	fmt.Fprintf(os.Stdout, "Found %d errors.\n", errorCount)
+cmd/clicheck/check_cli_conventions.go:53:14:	fmt.Fprintln(os.Stdout, "Congrats, CLI looks good!")
+running k8s.io/kubernetes/cmd/cloud-controller-manager
+running k8s.io/kubernetes/cmd/controller-manager
+error: failed to check packages: errors while loading package k8s.io/kubernetes/cmd/controller-manager: [-: no Go files in /Users/dc/go/src/k8s.io/kubernetes/cmd/controller-manager]
+running k8s.io/kubernetes/cmd/gendocs
+cmd/gendocs/gen_kubectl_docs.go:47:11:	os.Setenv("HOME", "/home/username")
+cmd/gendocs/gen_kubectl_docs.go:50:21:	doc.GenMarkdownTree(kubectl, outDir)
+running k8s.io/kubernetes/cmd/genkubedocs
+cmd/genkubedocs/gen_kube_docs.go:58:22:	doc.GenMarkdownTree(apiserver, outDir)
+cmd/genkubedocs/gen_kube_docs.go:62:22:	doc.GenMarkdownTree(controllermanager, outDir)
+cmd/genkubedocs/gen_kube_docs.go:66:22:	doc.GenMarkdownTree(cloudcontrollermanager, outDir)
+cmd/genkubedocs/gen_kube_docs.go:70:22:	doc.GenMarkdownTree(proxy, outDir)
+cmd/genkubedocs/gen_kube_docs.go:74:22:	doc.GenMarkdownTree(scheduler, outDir)
+cmd/genkubedocs/gen_kube_docs.go:78:22:	doc.GenMarkdownTree(kubelet, outDir)
+cmd/genkubedocs/gen_kube_docs.go:87:22:	doc.GenMarkdownTree(kubeadm, outDir)
+cmd/genkubedocs/gen_kube_docs.go:90:25:	MarkdownPostProcessing(kubeadm, outDir, cleanupForInclude)
+running k8s.io/kubernetes/cmd/genman
+cmd/genman/gen_kube_man.go:61:11:	os.Setenv("HOME", "/home/username")
+cmd/genman/gen_kube_man.go:224:21:	defer outFile.Close()
+running k8s.io/kubernetes/cmd/genswaggertypedocs
+cmd/genswaggertypedocs/swagger_type_docs.go:51:19:	defer file.Close()
+running k8s.io/kubernetes/cmd/genutils
+running k8s.io/kubernetes/cmd/genyaml
+cmd/genyaml/gen_kubectl_yaml.go:66:11:	os.Setenv("HOME", "/home/username")
+cmd/genyaml/gen_kubectl_yaml.go:162:21:	defer outFile.Close()
+running k8s.io/kubernetes/cmd/hyperkube
+cmd/hyperkube/main.go:134:13:	cmd.Help()
+cmd/hyperkube/main.go:144:24:	cmd.Flags().MarkHidden("make-symlinks") // hide this flag from appearing in servers' usage output
+running k8s.io/kubernetes/cmd/importverifier
+running k8s.io/kubernetes/cmd/kube-apiserver
+running k8s.io/kubernetes/cmd/kube-controller-manager
+running k8s.io/kubernetes/cmd/kube-proxy
+running k8s.io/kubernetes/cmd/kube-scheduler
+running k8s.io/kubernetes/cmd/kubeadm
+running k8s.io/kubernetes/cmd/kubectl
+running k8s.io/kubernetes/cmd/kubelet
+running k8s.io/kubernetes/cmd/kubemark
+running k8s.io/kubernetes/cmd/linkcheck
+cmd/linkcheck/links.go:90:14:	fmt.Fprintf(os.Stdout, "\nChecking file %s\n", filePath)
+cmd/linkcheck/links.go:118:16:	fmt.Fprintf(os.Stdout, "Visiting %s\n", string(processedURL))

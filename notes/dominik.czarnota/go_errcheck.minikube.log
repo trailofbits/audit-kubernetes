@@ -1,0 +1,9 @@
+➜ ~/projects/audit-kubernetes/notes/stefan.edwards/go_errcheck.sh k8s.io/minikube
+running k8s.io/minikube/cmd/drivers
+error: failed to check packages: errors while loading package k8s.io/minikube/cmd/drivers: [-: no Go files in /Users/dc/go/src/k8s.io/minikube/cmd/drivers]
+running k8s.io/minikube/cmd/gvisor
+running k8s.io/minikube/cmd/minikube
+running k8s.io/minikube/cmd/storage-provisioner
+running k8s.io/minikube/cmd/util
+cmd/util/util.go:42:15:	defer l.Close()
+cmd/util/util_test.go:42:12:	os.Setenv(clientcmd.RecommendedConfigPathEnvVar, test.input)
