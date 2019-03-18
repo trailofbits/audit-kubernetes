@@ -1,0 +1,86 @@
+[gosec] 2019/03/18 14:21:11 including rules: default
+[gosec] 2019/03/18 14:21:11 excluding rules: default
+2019/03/18 14:21:11 directory k8s.io/minikube/cmd/drivers doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:21:11 located k8s.io/minikube/cmd/drivers in /Users/dc/go/src/k8s.io/minikube/cmd/drivers
+[gosec] 2019/03/18 14:21:11 Searching directory: /Users/dc/go/src/k8s.io/minikube/cmd/drivers
+[gosec] 2019/03/18 14:21:11 no buildable Go source files in /Users/dc/go/src/k8s.io/minikube/cmd/drivers
+[gosec] 2019/03/18 14:21:12 including rules: default
+[gosec] 2019/03/18 14:21:12 excluding rules: default
+2019/03/18 14:21:12 directory k8s.io/minikube/cmd/gvisor doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:21:12 located k8s.io/minikube/cmd/gvisor in /Users/dc/go/src/k8s.io/minikube/cmd/gvisor
+[gosec] 2019/03/18 14:21:12 Searching directory: /Users/dc/go/src/k8s.io/minikube/cmd/gvisor
+/Users/dc/go/src/k8s.io/minikube/pkg/minikube/assets/vm_assets.go:153:19: undeclared name: Asset
+[gosec] 2019/03/18 14:21:14 Checking package: main
+[gosec] 2019/03/18 14:21:14 Checking file: /Users/dc/go/src/k8s.io/minikube/cmd/gvisor/gvisor.go
+Results:
+
+Golang errors in file: [/Users/dc/go/src/k8s.io/minikube/pkg/minikube/assets/vm_assets.go]:
+
+  > [line 153 : column 19] - undeclared name
+
+
+
+Summary:
+   Files: 1
+   Lines: 31
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:21:15 including rules: default
+[gosec] 2019/03/18 14:21:15 excluding rules: default
+2019/03/18 14:21:15 directory k8s.io/minikube/cmd/minikube doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:21:15 located k8s.io/minikube/cmd/minikube in /Users/dc/go/src/k8s.io/minikube/cmd/minikube
+[gosec] 2019/03/18 14:21:15 Searching directory: /Users/dc/go/src/k8s.io/minikube/cmd/minikube
+/Users/dc/go/src/k8s.io/minikube/pkg/minikube/assets/vm_assets.go:153:19: undeclared name: Asset
+[gosec] 2019/03/18 14:21:18 Checking package: main
+[gosec] 2019/03/18 14:21:18 Checking file: /Users/dc/go/src/k8s.io/minikube/cmd/minikube/main.go
+Results:
+
+Golang errors in file: [/Users/dc/go/src/k8s.io/minikube/pkg/minikube/assets/vm_assets.go]:
+
+  > [line 153 : column 19] - undeclared name
+
+
+
+Summary:
+   Files: 1
+   Lines: 44
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:21:19 including rules: default
+[gosec] 2019/03/18 14:21:19 excluding rules: default
+2019/03/18 14:21:19 directory k8s.io/minikube/cmd/storage-provisioner doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:21:19 located k8s.io/minikube/cmd/storage-provisioner in /Users/dc/go/src/k8s.io/minikube/cmd/storage-provisioner
+[gosec] 2019/03/18 14:21:19 Searching directory: /Users/dc/go/src/k8s.io/minikube/cmd/storage-provisioner
+[gosec] 2019/03/18 14:21:22 Checking package: main
+[gosec] 2019/03/18 14:21:22 Checking file: /Users/dc/go/src/k8s.io/minikube/cmd/storage-provisioner/main.go
+Results:
+
+
+[/Users/dc/go/src/k8s.io/minikube/cmd/storage-provisioner/main.go:30] - G301: Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+  > os.MkdirAll("/tmp", 0755)
+
+
+Summary:
+   Files: 1
+   Lines: 40
+   Nosec: 0
+  Issues: 1
+
+[gosec] 2019/03/18 14:21:22 including rules: default
+[gosec] 2019/03/18 14:21:22 excluding rules: default
+2019/03/18 14:21:22 directory k8s.io/minikube/cmd/util doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:21:22 located k8s.io/minikube/cmd/util in /Users/dc/go/src/k8s.io/minikube/cmd/util
+[gosec] 2019/03/18 14:21:22 Searching directory: /Users/dc/go/src/k8s.io/minikube/cmd/util
+[gosec] 2019/03/18 14:21:24 Checking package: util
+[gosec] 2019/03/18 14:21:24 Checking file: /Users/dc/go/src/k8s.io/minikube/cmd/util/util.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 68
+   Nosec: 0
+  Issues: 0
+

@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ "$1" != "" ]
 then
     ns=$1
@@ -16,12 +17,13 @@ fi
 # must be 18 years or older
 # kids ask your parents' permission before using
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 for i in cmd/*
 do
     if [ -d "$i" ]
     then
         echo "running $ns/$i"
-        ~/go/bin/errcheck $ns/$i 2>&1 | tee -a go_errcheck.log
+        ~/go/bin/gosec -conf ${DIR}/gosec_config.json $ns/$i 2>&1 | tee -a gosec.log
     fi
 done

@@ -1,0 +1,398 @@
+[gosec] 2019/03/18 14:14:44 including rules: default
+[gosec] 2019/03/18 14:14:44 excluding rules: default
+2019/03/18 14:14:44 directory k8s.io/kubernetes/cmd/clicheck doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:14:44 located k8s.io/kubernetes/cmd/clicheck in /Users/dc/go/src/k8s.io/kubernetes/cmd/clicheck
+[gosec] 2019/03/18 14:14:44 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/clicheck
+[gosec] 2019/03/18 14:14:48 Checking package: main
+[gosec] 2019/03/18 14:14:48 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/clicheck/check_cli_conventions.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 54
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:14:48 including rules: default
+[gosec] 2019/03/18 14:14:48 excluding rules: default
+2019/03/18 14:14:48 directory k8s.io/kubernetes/cmd/cloud-controller-manager doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:14:48 located k8s.io/kubernetes/cmd/cloud-controller-manager in /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager
+[gosec] 2019/03/18 14:14:48 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager
+[gosec] 2019/03/18 14:14:55 Checking package: main
+[gosec] 2019/03/18 14:14:55 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/controller-manager.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 53
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:14:55 including rules: default
+[gosec] 2019/03/18 14:14:55 excluding rules: default
+2019/03/18 14:14:55 directory k8s.io/kubernetes/cmd/controller-manager doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:14:55 located k8s.io/kubernetes/cmd/controller-manager in /Users/dc/go/src/k8s.io/kubernetes/cmd/controller-manager
+[gosec] 2019/03/18 14:14:55 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/controller-manager
+[gosec] 2019/03/18 14:14:55 no buildable Go source files in /Users/dc/go/src/k8s.io/kubernetes/cmd/controller-manager
+[gosec] 2019/03/18 14:14:55 including rules: default
+[gosec] 2019/03/18 14:14:55 excluding rules: default
+2019/03/18 14:14:55 directory k8s.io/kubernetes/cmd/gendocs doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:14:55 located k8s.io/kubernetes/cmd/gendocs in /Users/dc/go/src/k8s.io/kubernetes/cmd/gendocs
+[gosec] 2019/03/18 14:14:55 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/gendocs
+[gosec] 2019/03/18 14:15:00 Checking package: main
+[gosec] 2019/03/18 14:15:00 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/gendocs/gen_kubectl_docs.go
+Results:
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/gendocs/gen_kubectl_docs.go:47] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > os.Setenv("HOME", "/home/username")
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/gendocs/gen_kubectl_docs.go:50] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > doc.GenMarkdownTree(kubectl, outDir)
+
+
+Summary:
+   Files: 1
+   Lines: 51
+   Nosec: 0
+  Issues: 2
+
+[gosec] 2019/03/18 14:15:00 including rules: default
+[gosec] 2019/03/18 14:15:00 excluding rules: default
+2019/03/18 14:15:00 directory k8s.io/kubernetes/cmd/genkubedocs doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:15:00 located k8s.io/kubernetes/cmd/genkubedocs in /Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs
+[gosec] 2019/03/18 14:15:00 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs
+[gosec] 2019/03/18 14:15:15 Checking package: main
+[gosec] 2019/03/18 14:15:15 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/gen_kube_docs.go
+[gosec] 2019/03/18 14:15:15 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/postprocessing.go
+Results:
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/postprocessing.go:41] - G304: Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+  > ioutil.ReadFile(filename)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/gen_kube_docs.go:58] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > doc.GenMarkdownTree(apiserver, outDir)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/gen_kube_docs.go:62] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > doc.GenMarkdownTree(controllermanager, outDir)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/gen_kube_docs.go:70] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > doc.GenMarkdownTree(proxy, outDir)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/gen_kube_docs.go:74] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > doc.GenMarkdownTree(scheduler, outDir)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/gen_kube_docs.go:78] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > doc.GenMarkdownTree(kubelet, outDir)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/gen_kube_docs.go:87] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > doc.GenMarkdownTree(kubeadm, outDir)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/gen_kube_docs.go:90] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > MarkdownPostProcessing(kubeadm, outDir, cleanupForInclude)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genkubedocs/gen_kube_docs.go:66] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > doc.GenMarkdownTree(cloudcontrollermanager, outDir)
+
+
+Summary:
+   Files: 2
+   Lines: 168
+   Nosec: 0
+  Issues: 9
+
+[gosec] 2019/03/18 14:15:15 including rules: default
+[gosec] 2019/03/18 14:15:15 excluding rules: default
+2019/03/18 14:15:15 directory k8s.io/kubernetes/cmd/genman doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:15:15 located k8s.io/kubernetes/cmd/genman in /Users/dc/go/src/k8s.io/kubernetes/cmd/genman
+[gosec] 2019/03/18 14:15:15 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/genman
+[gosec] 2019/03/18 14:15:31 Checking package: main
+[gosec] 2019/03/18 14:15:31 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/genman/gen_kube_man.go
+Results:
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genman/gen_kube_man.go:61] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > os.Setenv("HOME", "/home/username")
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genman/gen_kube_man.go:128-132] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > out.WriteString(`% KUBERNETES(1) kubernetes User Manuals
+% Eric Paris
+% Jan 2015
+# NAME
+`)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genman/gen_kube_man.go:211-214] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > out.WriteString(`
+# HISTORY
+January 2015, Originally compiled by Eric Paris (eparis at redhat dot com) based on the kubernetes source material, but hopefully they have been automatically generated since!
+`)
+
+
+Summary:
+   Files: 1
+   Lines: 231
+   Nosec: 0
+  Issues: 3
+
+[gosec] 2019/03/18 14:15:32 including rules: default
+[gosec] 2019/03/18 14:15:32 excluding rules: default
+2019/03/18 14:15:32 directory k8s.io/kubernetes/cmd/genswaggertypedocs doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:15:32 located k8s.io/kubernetes/cmd/genswaggertypedocs in /Users/dc/go/src/k8s.io/kubernetes/cmd/genswaggertypedocs
+[gosec] 2019/03/18 14:15:32 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/genswaggertypedocs
+[gosec] 2019/03/18 14:15:33 Checking package: main
+[gosec] 2019/03/18 14:15:33 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/genswaggertypedocs/swagger_type_docs.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 71
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:15:33 including rules: default
+[gosec] 2019/03/18 14:15:33 excluding rules: default
+2019/03/18 14:15:33 directory k8s.io/kubernetes/cmd/genutils doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:15:33 located k8s.io/kubernetes/cmd/genutils in /Users/dc/go/src/k8s.io/kubernetes/cmd/genutils
+[gosec] 2019/03/18 14:15:33 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/genutils
+[gosec] 2019/03/18 14:15:34 Checking package: genutils
+[gosec] 2019/03/18 14:15:34 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/genutils/genutils.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 43
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:15:34 including rules: default
+[gosec] 2019/03/18 14:15:34 excluding rules: default
+2019/03/18 14:15:34 directory k8s.io/kubernetes/cmd/genyaml doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:15:34 located k8s.io/kubernetes/cmd/genyaml in /Users/dc/go/src/k8s.io/kubernetes/cmd/genyaml
+[gosec] 2019/03/18 14:15:34 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/genyaml
+[gosec] 2019/03/18 14:15:40 Checking package: main
+[gosec] 2019/03/18 14:15:40 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/genyaml/gen_kubectl_yaml.go
+Results:
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/genyaml/gen_kubectl_yaml.go:66] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > os.Setenv("HOME", "/home/username")
+
+
+Summary:
+   Files: 1
+   Lines: 168
+   Nosec: 0
+  Issues: 1
+
+[gosec] 2019/03/18 14:15:40 including rules: default
+[gosec] 2019/03/18 14:15:40 excluding rules: default
+2019/03/18 14:15:40 directory k8s.io/kubernetes/cmd/hyperkube doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:15:40 located k8s.io/kubernetes/cmd/hyperkube in /Users/dc/go/src/k8s.io/kubernetes/cmd/hyperkube
+[gosec] 2019/03/18 14:15:40 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/hyperkube
+[gosec] 2019/03/18 14:15:57 Checking package: main
+[gosec] 2019/03/18 14:15:57 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/hyperkube/main.go
+Results:
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/hyperkube/main.go:134] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > cmd.Help()
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/hyperkube/main.go:144] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > cmd.Flags().MarkHidden("make-symlinks")
+
+
+Summary:
+   Files: 1
+   Lines: 176
+   Nosec: 0
+  Issues: 2
+
+[gosec] 2019/03/18 14:15:57 including rules: default
+[gosec] 2019/03/18 14:15:57 excluding rules: default
+2019/03/18 14:15:57 directory k8s.io/kubernetes/cmd/importverifier doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:15:57 located k8s.io/kubernetes/cmd/importverifier in /Users/dc/go/src/k8s.io/kubernetes/cmd/importverifier
+[gosec] 2019/03/18 14:15:57 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/importverifier
+[gosec] 2019/03/18 14:15:58 Checking package: main
+[gosec] 2019/03/18 14:15:58 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/importverifier/importverifier.go
+Results:
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/importverifier/importverifier.go:219] - G304: Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+  > ioutil.ReadFile(configFile)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/importverifier/importverifier.go:235] - G204: Subprocess launched with variable (Confidence: HIGH, Severity: MEDIUM)
+  > exec.Command(cmd, args...)
+
+
+Summary:
+   Files: 1
+   Lines: 278
+   Nosec: 0
+  Issues: 2
+
+[gosec] 2019/03/18 14:15:58 including rules: default
+[gosec] 2019/03/18 14:15:58 excluding rules: default
+2019/03/18 14:15:58 directory k8s.io/kubernetes/cmd/kube-apiserver doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:15:58 located k8s.io/kubernetes/cmd/kube-apiserver in /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-apiserver
+[gosec] 2019/03/18 14:15:58 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-apiserver
+[gosec] 2019/03/18 14:16:14 Checking package: main
+[gosec] 2019/03/18 14:16:14 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-apiserver/apiserver.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 50
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:16:15 including rules: default
+[gosec] 2019/03/18 14:16:15 excluding rules: default
+2019/03/18 14:16:15 directory k8s.io/kubernetes/cmd/kube-controller-manager doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:16:15 located k8s.io/kubernetes/cmd/kube-controller-manager in /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-controller-manager
+[gosec] 2019/03/18 14:16:15 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-controller-manager
+[gosec] 2019/03/18 14:16:26 Checking package: main
+[gosec] 2019/03/18 14:16:26 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-controller-manager/controller-manager.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 53
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:16:26 including rules: default
+[gosec] 2019/03/18 14:16:26 excluding rules: default
+2019/03/18 14:16:26 directory k8s.io/kubernetes/cmd/kube-proxy doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:16:26 located k8s.io/kubernetes/cmd/kube-proxy in /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-proxy
+[gosec] 2019/03/18 14:16:26 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-proxy
+[gosec] 2019/03/18 14:16:31 Checking package: main
+[gosec] 2019/03/18 14:16:31 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-proxy/proxy.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 53
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:16:31 including rules: default
+[gosec] 2019/03/18 14:16:31 excluding rules: default
+2019/03/18 14:16:31 directory k8s.io/kubernetes/cmd/kube-scheduler doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:16:31 located k8s.io/kubernetes/cmd/kube-scheduler in /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-scheduler
+[gosec] 2019/03/18 14:16:31 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-scheduler
+[gosec] 2019/03/18 14:16:38 Checking package: main
+[gosec] 2019/03/18 14:16:38 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/kube-scheduler/scheduler.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 51
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:16:38 including rules: default
+[gosec] 2019/03/18 14:16:38 excluding rules: default
+2019/03/18 14:16:38 directory k8s.io/kubernetes/cmd/kubeadm doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:16:38 located k8s.io/kubernetes/cmd/kubeadm in /Users/dc/go/src/k8s.io/kubernetes/cmd/kubeadm
+[gosec] 2019/03/18 14:16:38 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/kubeadm
+[gosec] 2019/03/18 14:16:43 Checking package: main
+[gosec] 2019/03/18 14:16:43 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/kubeadm/kubeadm.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 34
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:16:43 including rules: default
+[gosec] 2019/03/18 14:16:43 excluding rules: default
+2019/03/18 14:16:43 directory k8s.io/kubernetes/cmd/kubectl doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:16:43 located k8s.io/kubernetes/cmd/kubectl in /Users/dc/go/src/k8s.io/kubernetes/cmd/kubectl
+[gosec] 2019/03/18 14:16:43 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/kubectl
+[gosec] 2019/03/18 14:16:48 Checking package: main
+[gosec] 2019/03/18 14:16:48 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/kubectl/kubectl.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 54
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:16:48 including rules: default
+[gosec] 2019/03/18 14:16:48 excluding rules: default
+2019/03/18 14:16:48 directory k8s.io/kubernetes/cmd/kubelet doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:16:48 located k8s.io/kubernetes/cmd/kubelet in /Users/dc/go/src/k8s.io/kubernetes/cmd/kubelet
+[gosec] 2019/03/18 14:16:48 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/kubelet
+[gosec] 2019/03/18 14:16:58 Checking package: main
+[gosec] 2019/03/18 14:16:58 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/kubelet/kubelet.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 47
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:16:58 including rules: default
+[gosec] 2019/03/18 14:16:58 excluding rules: default
+2019/03/18 14:16:58 directory k8s.io/kubernetes/cmd/kubemark doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:16:58 located k8s.io/kubernetes/cmd/kubemark in /Users/dc/go/src/k8s.io/kubernetes/cmd/kubemark
+[gosec] 2019/03/18 14:16:58 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/kubemark
+[gosec] 2019/03/18 14:17:08 Checking package: main
+[gosec] 2019/03/18 14:17:08 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/kubemark/hollow-node.go
+Results:
+
+
+Summary:
+   Files: 1
+   Lines: 210
+   Nosec: 0
+  Issues: 0
+
+[gosec] 2019/03/18 14:17:09 including rules: default
+[gosec] 2019/03/18 14:17:09 excluding rules: default
+2019/03/18 14:17:09 directory k8s.io/kubernetes/cmd/linkcheck doesn't exist, checking if is a package on $GOPATH
+2019/03/18 14:17:09 located k8s.io/kubernetes/cmd/linkcheck in /Users/dc/go/src/k8s.io/kubernetes/cmd/linkcheck
+[gosec] 2019/03/18 14:17:09 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/linkcheck
+[gosec] 2019/03/18 14:17:10 Checking package: main
+[gosec] 2019/03/18 14:17:10 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/linkcheck/links.go
+Results:
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/linkcheck/links.go:84] - G304: Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+  > ioutil.ReadFile(filePath)
+
+
+Summary:
+   Files: 1
+   Lines: 190
+   Nosec: 0
+  Issues: 1
+
