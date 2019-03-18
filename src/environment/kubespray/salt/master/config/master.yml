@@ -1,0 +1,10 @@
+file_recv: True
+file_roots:
+ base:
+   - /vagrant/salt/srv/base/states
+   - /vagrant/salt/srv/base/orch
+   - /vagrant/salt/srv/base/assets
+
+pillar_roots:
+  base:
+    - /vagrant/salt/srv/base/pillars
