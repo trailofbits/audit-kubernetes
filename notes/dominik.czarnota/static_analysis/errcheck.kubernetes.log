@@ -1,4 +1,4 @@
-➜ ~/projects/audit-kubernetes/notes/stefan.edwards/go_errcheck.sh k8s.io/kubernetes
+➜ ~/projects/audit-kubernetes/notes/dominik.czarnota/errcheck.sh k8s.io/kubernetes
 running k8s.io/kubernetes/cmd/clicheck
 cmd/clicheck/check_cli_conventions.go:49:14:	fmt.Fprintf(os.Stdout, "Found %d errors.\n", errorCount)
 cmd/clicheck/check_cli_conventions.go:53:14:	fmt.Fprintln(os.Stdout, "Congrats, CLI looks good!")
@@ -41,3 +41,13 @@ running k8s.io/kubernetes/cmd/kubemark
 running k8s.io/kubernetes/cmd/linkcheck
 cmd/linkcheck/links.go:90:14:	fmt.Fprintf(os.Stdout, "\nChecking file %s\n", filePath)
 cmd/linkcheck/links.go:118:16:	fmt.Fprintf(os.Stdout, "Visiting %s\n", string(processedURL))
+
+
+➜ ~/go/bin/errcheck ./...
+app/controllermanager.go:100:14:	fmt.Fprintf(cmd.OutOrStderr(), usageFmt, cmd.UseLine())
+app/controllermanager.go:105:14:	fmt.Fprintf(cmd.OutOrStdout(), "%s\n\n"+usageFmt, cmd.Long, cmd.UseLine())
+app/options/options.go:132:35:	fss.FlagSet("generic").MarkHidden("controllers")
+app/options/options_test.go:154:10:	fs.Parse(args)
+app/testing/testserver.go:66:16:	os.RemoveAll(result.TmpDir)
+app/testing/testserver.go:90:10:	fs.Parse(customFlags)
+app/testing/testserver.go:169:11:	ln.Close()

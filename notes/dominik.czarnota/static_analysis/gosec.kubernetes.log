@@ -396,3 +396,70 @@ Summary:
    Nosec: 0
   Issues: 1
 
+
+➜ pwd
+/Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager
+➜ ~/go/bin/gosec -conf ~/projects/audit-kubernetes/notes/dominik.czarnota/gosec_config.json ./...
+[gosec] 2019/03/18 17:19:26 including rules: default
+[gosec] 2019/03/18 17:19:26 excluding rules: default
+[gosec] 2019/03/18 17:19:26 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager
+[gosec] 2019/03/18 17:19:26 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app
+[gosec] 2019/03/18 17:19:26 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config
+[gosec] 2019/03/18 17:19:26 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/scheme
+[gosec] 2019/03/18 17:19:26 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/v1alpha1
+[gosec] 2019/03/18 17:19:26 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/config
+[gosec] 2019/03/18 17:19:26 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/options
+[gosec] 2019/03/18 17:19:26 Searching directory: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/testing
+[gosec] 2019/03/18 17:19:32 Checking package: main
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/controller-manager.go
+[gosec] 2019/03/18 17:19:32 Checking package: app
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/controllermanager.go
+[gosec] 2019/03/18 17:19:32 Checking package: config
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/doc.go
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/register.go
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/types.go
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/zz_generated.deepcopy.go
+[gosec] 2019/03/18 17:19:32 Checking package: scheme
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/scheme/scheme.go
+[gosec] 2019/03/18 17:19:32 Checking package: v1alpha1
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/v1alpha1/defaults.go
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/v1alpha1/doc.go
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/v1alpha1/register.go
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/v1alpha1/types.go
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/v1alpha1/zz_generated.conversion.go
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/v1alpha1/zz_generated.deepcopy.go
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/apis/config/v1alpha1/zz_generated.defaults.go
+[gosec] 2019/03/18 17:19:32 Checking package: app
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/config/config.go
+[gosec] 2019/03/18 17:19:32 Checking package: options
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/options/options.go
+[gosec] 2019/03/18 17:19:32 Checking package: testing
+[gosec] 2019/03/18 17:19:32 Checking file: /Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/testing/testserver.go
+Results:
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/testing/testserver.go:161] - G102: Binds to all network interfaces (Confidence: HIGH, Severity: MEDIUM)
+  > net.Listen("tcp", ":0")
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/options/options.go:132] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > fss.FlagSet("generic").MarkHidden("controllers")
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/testing/testserver.go:66] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > os.RemoveAll(result.TmpDir)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/testing/testserver.go:90] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > fs.Parse(customFlags)
+
+
+[/Users/dc/go/src/k8s.io/kubernetes/cmd/cloud-controller-manager/app/testing/testserver.go:169] - G104: Errors unhandled. (Confidence: HIGH, Severity: LOW)
+  > ln.Close()
+
+
+Summary:
+   Files: 17
+   Lines: 1422
+   Nosec: 0
+  Issues: 5
