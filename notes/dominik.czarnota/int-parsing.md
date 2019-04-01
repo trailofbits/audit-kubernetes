@@ -86,6 +86,8 @@ TODO: analyze them
 
 ### Atoi converted to int32/int64
 
+**Since `Atoi`  returns an `int` - casting to `int64` is rather fine. Casting to `int32` may overflow and the cast is needed - but to be valid, they should rather use `strconv.ParseInt` with `bits=32`.**
+
 There are places where they convert string to int and then convert it to appropriate type. The value itself may be overflowed and the error won't be detected in those cases.
 
 In `src/kubernetes-1.13.4/pkg/cloudprovider/providers/aws/aws.go:3169`:
