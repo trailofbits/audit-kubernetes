@@ -1,0 +1,3 @@
+[submodule "src/kubectl_cp_traversal_poc/kubernetes"]
+	path = src/kubectl_cp_traversal_poc/kubernetes
+	url = https://github.com/kubernetes/kubernetes/
