@@ -1,0 +1,13 @@
+apiVersion: kubeadm.k8s.io/v1beta1
+kind: ClusterConfiguration
+kubernetesVersion: v1.13.0
+metadata:
+  name: 1.13-sample
+apiServer:
+  extraArgs:
+    advertise-address: 0.0.0.0
+
+etcd:
+  external:
+    endpoints:
+    - http://localhost:2379

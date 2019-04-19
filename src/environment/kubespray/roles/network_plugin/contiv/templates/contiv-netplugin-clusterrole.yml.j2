@@ -1,0 +1,29 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: contiv-netplugin
+  namespace: kube-system
+rules:
+  - apiGroups:
+    - ""
+    - extensions
+    resources:
+      - endpoints
+      - nodes
+      - namespaces
+      - networkpolicies
+      - pods
+      - services
+    verbs:
+      - watch
+      - list
+      - update
+      - get
+  - apiGroups:
+    - policy
+    resourceNames:
+    - privileged
+    resources:
+    - podsecuritypolicies
+    verbs:
+    - use

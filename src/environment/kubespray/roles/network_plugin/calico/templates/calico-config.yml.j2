@@ -1,0 +1,20 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: calico-config
+  namespace: kube-system
+data:
+  etcd_endpoints: "{{ etcd_access_addresses }}"
+  etcd_ca: "/calico-secrets/ca_cert.crt"
+  etcd_cert: "/calico-secrets/cert.crt"
+  etcd_key: "/calico-secrets/key.pem"
+{% if calico_network_backend is defined and calico_network_backend == 'none' %}
+  cluster_type: "kubespray"
+  calico_backend: "none"
+{% else %}
+  cluster_type: "kubespray,bgp"
+  calico_backend: "bird"
+{% endif %}
+{% if inventory_hostname in groups['k8s-cluster'] and peer_with_router|default(false) %}
+  as: "{{ local_as|default(global_as_num) }}"
+{% endif -%}

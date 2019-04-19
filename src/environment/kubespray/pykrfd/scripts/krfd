@@ -1,0 +1,16 @@
+#!/usr/bin/env python2
+import logging
+
+import krfd.cli
+
+def main():
+    """
+    The main entry point for the `krfd` CLI. Logic entrypoint is generated from
+    the CLI library.
+    """
+
+    entry, args = krfd.cli.generate_cli()
+    entry(args)
+
+if __name__ == "__main__":
+    main()

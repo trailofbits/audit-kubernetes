@@ -1,0 +1,80 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+kube_masters = ENV.fetch("K8_MASTERS", 1).to_i
+kube_workers = ENV.fetch("K8_WORKERS", 1).to_i
+
+salt_master_ram = ENV.fetch("SALT_MASTER_RAM", 1024).to_i
+salt_master_cpus = ENV.fetch("SALT_MASTER_CPUS", 1).to_i
+
+kube_master_ram = ENV.fetch("K8_MASTER_RAM", 2048).to_i
+kube_master_cpus = ENV.fetch("K8_MASTER_CPUS", 2).to_i
+
+kube_worker_ram = ENV.fetch("K8_WORKER_RAM", 1024).to_i
+kube_worker_cpus = ENV.fetch("K8_WORKER_CPUS", 1).to_i
+
+kubernetes_version = ENV.fetch("K8_VERSION", "v1.13.0")
+
+kube_master_subnet_base = 50
+kube_worker_subnet_base = 100
+
+Vagrant.configure("2") do |config|
+  # Set all machines to run on ubuntu 18.04
+  config.vm.box = "ubuntu/xenial64"
+
+  config.vm.define :salt_master do |salt_master|
+    # Configure required resources to comfortably execute salt
+    salt_master.vm.provider "virtualbox" do |v|
+      v.memory = salt_master_ram
+      v.cpus = salt_master_cpus
+    end
+
+    # Set a static IP for the master
+    salt_master.vm.network "private_network", ip: "172.28.128.5"
+    # Set the hostname for the master
+    salt_master.vm.hostname = "salt-master"
+
+    salt_master.vm.provision :salt do |salt|
+      salt.install_master = true
+      salt.minion_config = "salt/minion/config/minion.yml"
+      salt.master_config = "salt/master/config/master.yml"
+    end
+  end
+
+  (1..kube_masters).each do |i|
+    config.vm.define "kube_master_#{i}" do |kube_master|
+      kube_master.vm.provider "virtualbox" do |v|
+        v.memory = kube_master_ram
+        v.cpus = kube_master_cpus
+      end
+      # Set a static IP for the agent
+      kube_master.vm.network "private_network", ip: "172.28.128.#{kube_master_subnet_base + i}"
+      # Set the hostname for agent 1
+      kube_master.vm.hostname = "kube-master-#{i}"
+
+      kube_master.vm.provision :salt do |salt|
+        salt.install_master = false
+        salt.minion_config = "salt/minion/config/minion.yml"
+      end
+    end
+
+  end
+
+  (1..kube_workers).each do |i|
+    config.vm.define "kube_worker_#{i}" do |kube_worker|
+      kube_worker.vm.provider "virtualbox" do |v|
+        v.memory = kube_worker_ram
+        v.cpus = kube_worker_cpus
+      end
+      # Set a static IP for the agent
+      kube_worker.vm.network "private_network", ip: "172.28.128.#{kube_worker_subnet_base + i}"
+      # Set the hostname for agent 2
+      kube_worker.vm.hostname = "kube-worker-#{i}"
+
+      kube_worker.vm.provision :salt do |salt|
+        salt.install_master = false
+        salt.minion_config = "salt/minion/config/minion.yml"
+      end
+    end
+  end
+end
