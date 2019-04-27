@@ -1,0 +1,54 @@
+---
+- name: Check if bootstrap is needed
+  raw: stat /opt/bin/.bootstrapped
+  register: need_bootstrap
+  environment: {}
+  failed_when: false
+  changed_when: false
+  tags:
+    - facts
+
+- name: Force binaries directory for Container Linux by CoreOS
+  set_fact:
+    bin_dir: "/opt/bin"
+  tags:
+    - facts
+
+- name: Run bootstrap.sh
+  script: bootstrap.sh
+  when: need_bootstrap.rc != 0
+
+- set_fact:
+    ansible_python_interpreter: "{{ bin_dir }}/python"
+  tags:
+    - facts
+
+- name: Install pip3
+  command: "{{ ansible_python_interpreter }} -m ensurepip"
+  args:
+    creates: "{{ bin_dir }}/pypy3/bin/pip3"
+  register: pip_installed
+
+- name: Install pip3 link
+  file:
+    src: "{{ bin_dir }}/pypy3/bin/pip3"
+    dest: "{{ bin_dir }}/pip3"
+    mode: 0755
+    state: link
+  when: pip_installed.changed
+
+- name: Install required python modules
+  pip:
+    name: "{{ item }}"
+    extra_args: "{{ pip_extra_args | default(omit) }}"
+  with_items: "{{ pip_python_coreos_modules }}"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ bin_dir }}"
+
+- name: Disable auto-upgrade
+  systemd:
+    name: locksmithd.service
+    masked: true
+    state: stopped
+  when:
+    - not coreos_auto_upgrade

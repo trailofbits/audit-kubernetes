@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coredns{{ coredns_ordinal_suffix | default('') }}
+  namespace: kube-system
+  labels:
+    k8s-app: coredns{{ coredns_ordinal_suffix | default('') }}
+    kubernetes.io/cluster-service: "true"
+    kubernetes.io/name: "coredns{{ coredns_ordinal_suffix | default('') }}"
+    addonmanager.kubernetes.io/mode: Reconcile
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: "9153"
+    prometheus.io/scrape: "true"
+spec:
+  selector:
+    k8s-app: coredns{{ coredns_ordinal_suffix | default('') }}
+  clusterIP: {{ clusterIP }}
+  ports:
+    - name: dns
+      port: 53
+      protocol: UDP
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+    - name: metrics
+      port: 9153
+      protocol: TCP

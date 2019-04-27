@@ -1,0 +1,13 @@
+upstream kubernetes {
+    {% for server, addresses in salt["mine.get"]("kube-master-*", "network.ip_addrs").items() %}
+    server {{ addresses[0] }}:{{ pillar["kubernetes"]["api_server_port"] }};
+    {% endfor %}
+}
+
+server {
+    listen {{ pillar["kubernetes"]["api_server_port"] }};
+
+    location / {
+        proxy_pass http://kubernetes;
+    }
+}
