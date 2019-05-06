@@ -1,9 +1,9 @@
 # Overview
 
-- Component:
-- Owner(s):
+- Component: kube-scheduler
+- Owner(s): [sig-scheduling](https://github.com/kubernetes/community/tree/master/sig-scheduling)
 - SIG/WG(s) at meeting:
-- Service Data Classification:
+- Service Data Classifjcation: Moderate (the scheduler adds pods to nodes, but will not remove pods, for the most part)
 - Highest Risk Impact:
 
 # Service Notes
@@ -15,15 +15,37 @@ of a meeting/call.
 
 ## How does the service work?
 
+- Similar to most other components:
+  1. Retrieves a list of unscheduled/new pods
+  1. Retrieves a list of nodes with and their resource constraints
+  1. Chooses a node, potentially by round robin, to allocate based on best fit of resource requirements
+  1. Updates the pod spec on the kube-apiserver
+  1. that update is then retrieved by the node, which is also Watching components via the kube-apiserver
+- there may be multiple schedulers with various names, and parameters (such as pod-specific schedulers)
+
 ## Are there any subcomponents or shared boundaries?
+
+Yes
+
+- there may be multiple schedulers on the same MCP host
+- schedulers may run on the same host as the API server
 
 ## What communications protocols does it use?
 
+- standard HTTPS + auth (chosen by the cluster)
+
 ## Where does it store data?
+
+- most should be stored in etcd (via kube-apiserver)
+- some data will be stored on command line (configuration options) or on the file system (certificate paths for authentication)
 
 ## What is the most sensitive data it stores?
 
+- No direct storage
+
 ## How is that data stored?
+
+- N/A
 
 # Data Dictionary
 

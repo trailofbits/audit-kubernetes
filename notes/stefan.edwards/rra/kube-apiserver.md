@@ -3,7 +3,7 @@
 - Component: kube-apiserver
 - Owner(s): [sig-api-machinery](https://github.com/kubernetes/community/tree/master/sig-api-machinery)
 - SIG/WG(s) at meeting:
-- Service Data Classication: High (technically, it isn't needed, but most clusters will use it extensively)
+- Service Data Classification: High (technically, it isn't needed, but most clusters will use it extensively)
 - Highest Risk Impact:
 
 # Service Notes

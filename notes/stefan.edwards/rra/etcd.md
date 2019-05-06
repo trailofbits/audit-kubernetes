@@ -1,9 +1,9 @@
 # Overview
 
-- Component:
-- Owner(s):
+- Component: etcd
+- Owner(s): Technically external to Kubernetes itself, but managed by [sig-api-machinery](https://github.com/kubernetes/community/tree/master/sig-api-machinery)
 - SIG/WG(s) at meeting:
-- Service Data Classification:
+- Service Data Classification: Critical (on a cluster with an API server, access to etcd is root access to the cluster)
 - Highest Risk Impact:
 
 # Service Notes
@@ -15,15 +15,52 @@ of a meeting/call.
 
 ## How does the service work?
 
+- Distributed key-value store
+- uses RAFT for consensus
+  - always need to deploy (N x M) + 1 members to avoid leader election issues
+  - five is recommended for production usage
+- listens for requests from clients
+- clients are simple REST clients that interact via JSON or other mechanisms
+- in Kubernetes' case, data is stored under `/registry`
+
 ## Are there any subcomponents or shared boundaries?
+
+There shouldn't be; documentation specifically states:
+
+- should be in own cluster
+- limited to access by the API server(s) only
+- should use some sort of authentication (hopefully certificate auth)
 
 ## What communications protocols does it use?
 
+- HTTPS (with optional client-side or two-way TLS)
+  - can also use basic auth
+- there's technically gRPC as well
+
 ## Where does it store data?
+
+- typical database-style:
+  - data directory
+  - snapshot directory
+  - write-ahead log (WAL) directory
+- all three may be the same, depends on command line options
+- Consensus is then achived across nodes via RAFT (leader election + log replication via distributed state machine)
 
 ## What is the most sensitive data it stores?
 
+- literally holds the keys to the kingdom:
+  - pod specs
+  - secrets
+  - roles/attributes for {R, A}BAC
+  - literally any data stored in Kubernetes via the kube-apiserver
+- [Access to etcd is equivalent to root permission in the cluster](https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#securing-etcd-clusters) 
+
 ## How is that data stored?
+
+- Outside the scope of this assessment per se, but not encrypted at rest
+- Kubernetes supports this itself with Encryption providers
+- the typical process of a WAL + data + snapshot is used
+- this is then replicated across the cluster with Raft
 
 # Data Dictionary
 
@@ -85,6 +122,8 @@ For each control family we want to ask:
 ## Secrets Management
 
 ## Authentication
+
+- by default Kubernetes doesn't use two-way TLS to the etcd cluster, which would be the most secure (combined with IP restrictions so that stolen creds can't be reused on new infrastructure)
 
 ## Authorization
 
