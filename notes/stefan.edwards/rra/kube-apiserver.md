@@ -62,6 +62,54 @@ additionally, depending on the configuration there may be any number of other Ma
 - On etcd, with the level of protection requested by the user
 - looks like encryption [is a command line flag](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#configuration-and-determining-whether-encryption-at-rest-is-already-enabled)
 
+# Meeting notes
+
+- web hooks: kube-apiserver can call eternal resources
+  - authorization webhook (for when you wish to auth a request without setting up a new authorizer)
+  - images, other resources
+  - [FINDING] supports HTTP
+- Aggregate API server // Aggregator
+  - for adding externisbility resources
+  - a type of CRD, basically
+- component status -> reaches out to every component on the cluster
+- Network proxy: restrict outbound connections from kube-apiserver (currently no restriction)
+  - honestly a weakness: no egress filtering
+- Business logic in controllers, but kube-apiserver is info
+- cloud prociders, auth, &c
+- sharding by group version kind, put all KVKs into the same etcd
+- listeners: insecure and secure
+  - check if insecure is configured by default
+  - would be a finding if so
+- Not comfortable doing true multi-tenant on k8s
+- multi-single tenants (as in, if Pepsi wants to have marketing & accounting that's fine, but not Coke & Pepsi on the same cluster)
+- Best way to restrict access to kube-apiserver
+  - and working on a proxy as noted above
+- kube-apiserver is the root CA for *at least two* PKIs:
+  - two CAs, but not on by default w/o flags (check what happens w/o two CAs...)
+  - that would be a finding, if you can cross CAs really
+- TLS (multiple domains):
+  - etcd -> kube-apiserver
+  - the other is webhooks/kublet/components...
+- check secrets: can you tell k8s to encrypt a secret but not provide the flag? what does it do?
+- Alt route for secrets: volumes, write to a volume, then mount
+  - Can't really do much about that, since it's opaque to the kube-apiserver
+- ConfigMap: people can stuff secrets into ConfigMaps
+  - untyped data blob
+  - cannot encrypt
+  - recommend moving away from ConfigMaps 
+- Logging to var log
+  - resource names in logs (namespace, secret name, &c). Can be sensitive 
+  - [FINDING] no logs by default who did what
+  - need to turn on auditing for that 
+  - look at metrics as well, similar to CRDs
+- Data Validation
+  - can have admission controller, webhooks, &c.
+  - everything goes through validation
+- Session
+  - upgrade to HTTP/2, channel, or SPDY
+  - JWT is long lived (we know)
+  - Certain requests like proxy and logs require upgrade to channels
+  - look at k8s enhancement ... kube-apiserver dot md
 # Data Dictionary
 
 | Name | Classification/Sensitivity | Comments |
@@ -117,10 +165,13 @@ For each control family we want to ask:
 
 ## Networking
 
+- in the version of k8s we are testing, no outbound limits on external connections 
+
 ## Cryptography
 
 - Not encrypting secrets in etcd by default
 - requiring [a command line flag](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#configuration-and-determining-whether-encryption-at-rest-is-already-enabled)
+- SUpports HTTP for Webhooks and comopnent status
 
 ## Secrets Management
 
