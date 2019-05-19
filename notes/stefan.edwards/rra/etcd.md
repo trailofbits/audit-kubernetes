@@ -62,6 +62,34 @@ There shouldn't be; documentation specifically states:
 - the typical process of a WAL + data + snapshot is used
 - this is then replicated across the cluster with Raft
 
+# Meeting Notes
+
+- No authorization (from k8s perspective)
+- AUthentication by local port access in current k8s
+  - working towards mTLS for all connections
+- Raft consensus port, listener port
+- backups in etcd (system-level) not encrypted 
+- metrics aren't encrypted at all either 
+- multi-tenant: no multi-tenant controls at all
+  - the kube-apiserver is the arbiter namespaces
+  - could add namespaces to the registry, but that is a large amount of work
+  - no migration plan or test
+  - watches (like kubelet watching for pod spec changes) would break
+  - multi-single tenant is best route
+- RAFT port may be open by default, even in single etcd configuraitons
+- runs in a container within static Master kubelet, but is run as root
+- [CONTROL WEAKNESS] CA is passed on command line
+- Types of files: WAL, Snapshot, Data file (and maybe backup)
+  - [FINDING] no checksums on WAL/Snapshot/Data
+  - [RECOMMENDATION] checksum individual WAL entries, checksum the entire snapshot file
+  - do this because it's fast enough for individual entries, and then the snapshot should never change
+- Crypto, really only TLS (std go) and checksums for backups (but not other files, as noted above)
+- No auditing, but that's less useful
+  - kube-apiserver is the arbiter of what things are
+  - kube-apiserver uses a single connection credential to etcd w/o impersonation, so harder to tell who did what
+  - major events end up in the app log
+  - debug mode allows you to see all events when they happen
+
 # Data Dictionary
 
 | Name | Classification/Sensitivity | Comments |
