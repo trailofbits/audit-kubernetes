@@ -13,7 +13,7 @@ Controls are grouped by type or _family_, which collect controls along logical g
 | Cryptography | Related to protecting the privacy or integrity of data |
 | Secrets Management | Related to the handling of sensitive application secrets such as password |
 | Networking | Related to the protocols and connections between cluster and application components |
-| Multi-tennacy | Related to the safe handling of two or more separate organizational groups within a cluster |
+| Multi-tenancy | Related to the safe handling of two or more separate organizational groups within a cluster |
 
 Additionally, we will keep the following families in mind throughout our review:
 
@@ -33,7 +33,7 @@ Additionally, we will keep the following families in mind throughout our review:
 Our review assessed the controls along the following criteria:
 
 - Strong: controls were well implemented, centrally located, non-bypassable, and robustly designed.
-- Satisfactory: controlls were well implemented, but difuse.
+- Satisfactory: controls were well implemented, but difuse.
 - Adequate: controls were implemented to industry-standard best practice guidelines.
 - Weak: controls were either partially unimplemented, applied, or contained flaws in their design or location.
 - Missing: an entire family of control was missing from a component.
