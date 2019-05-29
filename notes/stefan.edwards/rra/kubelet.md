@@ -106,15 +106,74 @@ For each control family we want to ask:
 
 ## Networking
 
+- Post 10250: read/write, authenticated
+- Port 10255: read-only, unauthenticated
+  - cadvisor uses this, going to be deprecated
+- 10248: healthz, unauth'd
+- static pod manifest directory
+- Static pod fetch via HTTP(S)
+
+### Routes: 
+
+- Auth filter on API, for 10250
+  - delegated to apiserver, subject access review, HTTPS request
+- `/pods` podspec on node -> leaks data
+- `/healthz`
+- `/spec`
+- `/stats-{cpu, mem, &c}`
+- on 10250 only:
+  - `/exec`
+  - `/attach`
+  - `portforward`
+  - `/kube-auth`
+  - `/debug-flags`
+  - `/cri/{exec, attach, portforward}`
+
+### Findings:
+
+- !FINDING: 10255 is unauthenticated and leaks secrets
+- !FINDING: 10255/10248 
+- !FINDING: 10250 is self-signed TLS 
+
 ## Cryptography
+
+- None
 
 ## Secrets Management
 
+- returned from kube-apiserver unencrypted
+- in memory cache
+- if pod mounts disk, written to tmpfs
+- !FINDING (already captured) ENV vars can expose secrets
+- configmaps are treated like secrets by kubelet
+- !FINDING keynames and secret names may be logged
+- maintains its own certs, secrets, bootstrap credential
+  - bootstrap: initial cert used to issue CSR to kube-apiserver
+  - !NOTE certs are written to disk unencrypted
+  - !FINDING bootstrap cert may be long lived, w/o a TTL
+
 ## Authentication
+
+- delegated to kube-apiserver, via HTTPS request, with subject access review
+- two-way TLS by default (we believe)
+- token auth
+  - bearer token
+  - passed to request to API server
+  - "token review"
+  - kube-apiserver responds w/ ident
+  - response is boolean (yes/no is this a user) and username/uid/groups/arbitrary data as a tuple
+- no auditing on kublet, but logged on kube-apiserver
 
 ## Authorization
 
+- delegated to kube-apiserver
+
 ## Multi-tenancy Isolation
+
+- kube-apiserver is the arbiter
+- kubelet doesn't know namespaces really
+- every pod is a separate tenant
+- pods are security boundaries
 
 ## Summary
 
