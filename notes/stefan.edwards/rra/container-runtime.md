@@ -42,6 +42,9 @@ N/A
 
 N/A
 
+# Meeting Notes
+
+
 # Data Dictionary
 
 | Name | Classification/Sensitivity | Comments |
@@ -97,15 +100,41 @@ For each control family we want to ask:
 
 ## Networking
 
+- CRI Runs an HTTP server
+  - port forwarding, exec, attach
+- !FINDING TLS bye default, but not mutual TLS, and self-signed
+  - kubelet -> exec request to CRI over gRPC
+  - Returns URL with single use Token
+  - gRPC is Unix Domain by default
+- Kubelet proxies or responds w/ redirect to API server (locally hosted CRI only)
+- !FINDING(same HTTP finding for pull as kubectl) CRI actually pulls images, no egress filtering
+  - image tag is SHA256, CRI checks that
+- Not sure how CNI, it might be exec
+- only responds to connections 
+- CRI uses Standard Go HTTP
+
 ## Cryptography
+
+- Nothing beyond TLS
 
 ## Secrets Management
 
+- !FINDING auth'd container repos, passed in via podspec, fetched by kubelet, are passed via CLI
+  - so anyone with access to the host running the container can see those secrets
+
 ## Authentication
+
+- Unix Domain Socket for gRPC, so Linux authN/authZ
+- !FINDING 8 character random single use token with 1 minute lifetype (response to line 109)
 
 ## Authorization
 
+- no authZ
+
 ## Multi-tenancy Isolation
+
+- knows nothing about tenants or namespaces
+- low-level component, kubelet/api-server is the arbiter
 
 ## Summary
 
