@@ -16,12 +16,19 @@ of a meeting/call.
 ## How does the service work?
 
 - Similar to most other components:
-  1. Retrieves a list of unscheduled/new pods
-  1. Retrieves a list of nodes with and their resource constraints
-  1. Chooses a node, potentially by round robin, to allocate based on best fit of resource requirements
+  1. Watches for unscheduled/new pods
+  1. Watches nodes with and their resource constraints
+  1. Chooses a node, via various mechanisms, to allocate based on best fit of resource requirements
   1. Updates the pod spec on the kube-apiserver
   1. that update is then retrieved by the node, which is also Watching components via the kube-apiserver
 - there may be multiple schedulers with various names, and parameters (such as pod-specific schedulers)
+
+- !NOTE schedulers are coöperative
+- !NOTE schedulers are *supposed* to honor the name, but need not
+  - Interesting note, makes the huge list of schedulers DoS interesting
+  - !NOTE idea there was to add a *huge* number of pods to be scheduled that are associated with an poorly named scheduler
+  - !NOTE peopoe shouldn't request specific schedulers in podspec, rather, there should be some webhook to process that
+  - !NOTE team wasn't sure what would happen with large number of pods to be scheduled
 
 ## Are there any subcomponents or shared boundaries?
 
@@ -102,15 +109,53 @@ For each control family we want to ask:
 
 ## Networking
 
+- only talks to kube-apiserver
+- colocated on the same host generally as kube-apiserver, but needn't be
+- has a web server (HTTP)
+  - !FINDING: same HTTP server finding as all other components
+  - metrics endpoint: qps, scheduling latency, &c
+  - healthz endpoint, which is just a 200 Ok response
+  - by default doesn't verify cert (maybe)
+
 ## Cryptography
+
+- None
 
 ## Secrets Management
 
+- Logs is the only persistence mechanism
+- !FINDING (to be added to all the other "you expose secrets in env and CLI" finding locations) auth token/cred passed in via CLI
+
 ## Authentication
+
+- no authN really
+- pods, nodes, related objects; doesn't deal in authN
+- unaware of any service/user accounts
 
 ## Authorization
 
+- schedluinc concepts protected by authZ
+  - quotas
+  - priority classes
+  - &c
+- this authZ is not enforced by scheduler, however, enforced by kube-apiserver
+
 ## Multi-tenancy Isolation
+
+- tenant: different users of workloads that don't want to trust one another 
+- namespaces are usually the boundaries
+- affinity/anti-affinity for namespace 
+- scheduler doesn't have data plan access
+- can have noisy neighbory problem
+  - is that the scheduler's issue?
+  - not sure
+  - namspace agnostic
+  - can use priority classes which can be RBAC'd to a specific namespace, like kube-system
+  - does not handle tenant fairness, handles priorty class fairness
+  - no visibility into network boundary or usage information
+  - no cgroup for network counts
+  - !FINDING anti-affinity can be abused: only I can have this one host, no one else, applicable from `kubectl` 
+  - !NOTE no backoff process for scheduler to reschedule a rejected pod by the kublet; the replicaset controller can create a tightloop (RSC -> Scheduler -> Kubelet -> Reject -> RSC...)
 
 ## Summary
 
