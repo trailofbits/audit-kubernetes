@@ -1,4 +1,35 @@
-# Overview
+# Introduction to the public version
+
+Trail of Bits utilizes GitHub for many of our reviews; we check in client source code, our source code, screenshots, notes, &c. to
+a single repository, and coördinate our efforts through GitHub. For example, we ran our various network scenarios through
+the following issues:
+
+- [As an external attacker](https://github.com/trailofbits/audit-kubernetes/issues/39)
+- [As an internal attacker](https://github.com/trailofbits/audit-kubernetes/issues/38)
+- [As a Malicious Internal User](https://github.com/trailofbits/audit-kubernetes/issues/37)
+
+We have a system for tagging issues with severity, help needed, &c., allowing a single location for the assessment team to  
+look for any project related information. Furthermore, we often invite clients to our repositories, allowing them to have 
+the same level of insight as we do regarding project status. We decided to open up our repository for this assessment, showcasing
+our work, the notes we wrote, and allow the community to see what directions we took during the assessment.
+
+# Highlights of the repository
+
+There are several areas of the repository that may be of interest to the community:
+
+- Bobby's [Vagrant scripts for Kubernetes](https://github.com/trailofbits/audit-kubernetes/tree/vagrant-kubernetes) to help users deploy a local testing environment
+- Dominik's [Notes detailing his processes](https://github.com/trailofbits/audit-kubernetes/tree/master/notes/dominik.czarnota) throughout the assessment
+- The [Rapid Risk Assessment documents](https://github.com/trailofbits/audit-kubernetes/tree/master/notes/stefan.edwards/rra), detailing our discussions with the wider community
+- The [threat modeling templates](https://github.com/trailofbits/audit-kubernetes/tree/master/notes/stefan.edwards/tm), including PyTM usage, data flows, &c. 
+
+Additionally, we have included a new directory, `./reports`, that includes the final versions of each of the three reports we (Trail of Bits) wrote. This includes 
+the three main reports we wrote:
+
+- [The technical review ](reports/Kubernetes Security Review.pdf)
+- [The threat model](reports/Kubernetes Threat Model.pdf)
+- [The white paper, detailing our experiences with Kubernetes as a whole](reports/Kubernetes White Paper.pdf)
+
+# Original Overview
 
 This repo is meant to hold:
 

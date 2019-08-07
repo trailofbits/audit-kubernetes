@@ -110,6 +110,7 @@ additionally, depending on the configuration there may be any number of other Ma
   - JWT is long lived (we know)
   - Certain requests like proxy and logs require upgrade to channels
   - look at k8s enhancement ... kube-apiserver dot md
+
 # Data Dictionary
 
 | Name | Classification/Sensitivity | Comments |
