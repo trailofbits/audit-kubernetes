@@ -1,7 +1,7 @@
 # Introduction to the public version
 
-Trail of Bits utilizes GitHub for many of our reviews; we check in client source code, our source code, screenshots, notes, &c. to
-a single repository, and coördinate our efforts through GitHub. For example, we ran our various network scenarios through
+Trail of Bits uses GitHub for many of our reviews; we check in client source code, our source code, screenshots, notes, &c. to
+a single repository, and coördinate our efforts through GitHub. For example, we reviewed various network scenarios through
 the following issues:
 
 - [As an external attacker](https://github.com/trailofbits/audit-kubernetes/issues/39)
