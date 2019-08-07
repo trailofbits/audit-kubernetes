@@ -25,9 +25,9 @@ There are several areas of the repository that may be of interest to the communi
 Additionally, we have included a new directory, `./reports`, that includes the final versions of each of the three reports we (Trail of Bits) wrote. This includes 
 the three main reports we wrote:
 
-- [The technical review ](reports/Kubernetes Security Review.pdf)
-- [The threat model](reports/Kubernetes Threat Model.pdf)
-- [The white paper, detailing our experiences with Kubernetes as a whole](reports/Kubernetes White Paper.pdf)
+- [The technical review](https://github.com/trailofbits/audit-kubernetes/blob/master/reports/Kubernetes%20Security%20Review.pdf)
+- [The threat model](https://github.com/trailofbits/audit-kubernetes/blob/master/reports/Kubernetes%20Threat%20Model.pdf)
+- [The white paper, detailing our experiences with Kubernetes as a whole](https://github.com/trailofbits/audit-kubernetes/blob/master/reports/Kubernetes%20White%20Paper.pdf)
 
 # Original Overview
 
